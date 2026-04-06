@@ -15,7 +15,7 @@ const projectSchema = new Schema(
         envVars: [
             {
                 key: String,
-                value: String, // TODO: Encryption logic
+                value: String,
             },
         ],
     },
