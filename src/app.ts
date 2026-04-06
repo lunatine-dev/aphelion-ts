@@ -34,8 +34,8 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
     await fastify.register(env, {
         confKey: "config",
         schema,
-        dotenv: true,
         data: process.env,
+        dotenv: false, // We don't have environment files, they're injected at runtime
     });
 
     const pluginDirs = [
