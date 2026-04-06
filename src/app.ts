@@ -10,14 +10,6 @@ import {
     FastifyReply,
 } from "fastify";
 
-type AppConfig = Required<Pick<NodeJS.ProcessEnv, "MONGO_URI" | "PORT">>;
-
-declare module "fastify" {
-    interface FastifyInstance {
-        config: AppConfig;
-    }
-}
-
 const schema = {
     type: "object",
     required: ["MONGO_URI", "PORT"],
