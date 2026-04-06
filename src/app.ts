@@ -1,6 +1,6 @@
 import fastifyAutoload from "@fastify/autoload";
 import env from "@fastify/env";
-import { exists, isDirectory } from "@utils/filesystem";
+import { isDirectory } from "@utils/filesystem";
 
 import path from "path";
 import {
