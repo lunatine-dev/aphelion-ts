@@ -1,12 +1,13 @@
 import crypto from "node:crypto";
 import { Session } from "@models/Session";
 import { SESSION_EXPIRY_IN_DAYS } from "@constants/security";
+import { Types } from "mongoose";
 
 const hashToken = (raw: string) =>
     crypto.createHash("sha256").update(raw).digest("hex");
 
 export const issueRefreshToken = async (
-    userId: string,
+    userId: Types.ObjectId,
     ip: string,
     userAgent: string,
 ) => {
