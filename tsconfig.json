@@ -10,7 +10,9 @@
         "baseUrl": "src",
         "paths": {
             "@constants/*": ["./constants/*"],
-            "@utils/*": ["./utils/*"]
+            "@utils/*": ["./utils/*"],
+            "@models/*": ["./models/*"],
+            "@services/*": ["./services/*"]
         }
     },
     "include": ["src"]
