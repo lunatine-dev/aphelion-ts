@@ -27,6 +27,7 @@
         "@fastify/oauth2": "^8.2.0",
         "@fastify/rate-limit": "^10.3.0",
         "@fastify/sensible": "^6.0.4",
+        "axios": "^1.14.0",
         "close-with-grace": "^2.5.0",
         "fastify-plugin": "^5.1.0",
         "mongoose": "^9.3.1",
