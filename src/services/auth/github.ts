@@ -4,6 +4,7 @@ import { issueRefreshToken } from "@services/auth/sessionService";
 import { User, UserModel } from "@models/User";
 import { AppError } from "@core/errors/errors";
 import { FastifyBaseLogger } from "fastify";
+import { isWhitelisted } from "@utils/security";
 
 export const processGitHubAuth = async (
     accessToken: string,
@@ -16,11 +17,8 @@ export const processGitHubAuth = async (
     if (!user) throw new AppError("User not found", 401);
 
     // Check if user is authorized to register
-    const rawAllowedIds = process.env.ALLOWED_GITHUB_IDS || "";
-    const allowedIds = rawAllowedIds.split(",").map((id) => id.trim());
     const currentUserId = user.id.toString();
-
-    if (!allowedIds.includes(currentUserId)) {
+    if (!isWhitelisted(currentUserId)) {
         logger.warn(
             {
                 attemptedId: currentUserId,
