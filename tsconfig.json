@@ -12,7 +12,8 @@
             "@constants/*": ["./constants/*"],
             "@utils/*": ["./utils/*"],
             "@models/*": ["./models/*"],
-            "@services/*": ["./services/*"]
+            "@services/*": ["./services/*"],
+            "@core/*": ["./core/*"]
         }
     },
     "include": ["src"]

@@ -5,9 +5,9 @@ import { Types } from "mongoose";
 export const issueAccessToken = (
     user: User,
     sessionId: Types.ObjectId,
-    fastify: FastifyInstance,
+    jwt: Pick<FastifyInstance, "jwt">["jwt"],
 ) => {
-    return fastify.jwt.sign(
+    return jwt.sign(
         {
             sub: user._id.toString(),
             sid: sessionId.toString(),
