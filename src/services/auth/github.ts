@@ -2,7 +2,7 @@ import { getUser } from "@services/github";
 import { issueRefreshToken } from "@services/auth/sessionService";
 
 import { User, UserModel } from "@models/User";
-import { AppError } from "@core/errors";
+import { AppError } from "@core/errors/errors";
 import { FastifyBaseLogger } from "fastify";
 
 export const processGitHubAuth = async (

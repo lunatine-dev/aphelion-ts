@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 
-import { AppError } from "@core/errors";
+import { AppError } from "@core/errors/errors";
 import { processGitHubAuth } from "@services/auth/github";
 import { issueAccessToken } from "@services/auth/accessTokenService";
 import { saveTicket } from "@services/auth/ticketManager";
