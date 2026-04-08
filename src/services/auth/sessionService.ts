@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { Session } from "@models/Session";
+import { Session, SessionModel } from "@models/Session";
 import { SESSION_EXPIRY_IN_DAYS } from "@constants/security";
 import { Types } from "mongoose";
 
@@ -18,7 +18,7 @@ export const issueRefreshToken = async (
         Date.now() + SESSION_EXPIRY_IN_DAYS * 24 * 60 * 60 * 1000,
     );
 
-    const session = await Session.create({
+    const session = await SessionModel.create({
         userId,
         refreshToken: hashedToken,
         ipAddress: ip,
@@ -40,7 +40,7 @@ export const rotateSession = async (
         Date.now() + SESSION_EXPIRY_IN_DAYS * 24 * 60 * 60 * 1000,
     );
     const newRaw = crypto.randomBytes(32).toString("hex");
-    const session = await Session.findOneAndUpdate(
+    const session = await SessionModel.findOneAndUpdate(
         {
             refreshToken: hashedOldToken,
             isValid: true,
