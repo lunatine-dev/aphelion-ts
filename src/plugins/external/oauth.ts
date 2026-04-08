@@ -1,5 +1,4 @@
-import oauth, { FastifyOAuth2Options } from "@fastify/oauth2";
-import { FastifyInstance } from "fastify";
+import oauth from "@fastify/oauth2";
 
 const requiredEnv = [
     "GITHUB_CLIENT_ID",

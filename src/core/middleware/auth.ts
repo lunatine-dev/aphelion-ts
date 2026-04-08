@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
 import { Session, SessionModel } from "@models/Session";
-import { User, UserModel } from "@models/User";
+import { User } from "@models/User";
 import { isWhitelisted } from "@utils/security";
 
 export const isAuthenticated = async (

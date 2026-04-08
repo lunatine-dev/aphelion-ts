@@ -1,5 +1,3 @@
-import { FastifyInstance } from "fastify";
-
 export type AppConfig = {
     MONGO_URI: string;
     PORT: number;

@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { Session, SessionModel } from "@models/Session";
+import { SessionModel } from "@models/Session";
 import { SESSION_EXPIRY_IN_DAYS } from "@constants/security";
 import { Types } from "mongoose";
 
