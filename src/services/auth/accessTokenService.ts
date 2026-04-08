@@ -14,6 +14,7 @@ export const issueAccessToken = (
             name: user.name,
             login: user.login,
             avatar: user.avatar,
+            githubId: user.githubId,
         },
         {
             expiresIn: "30m",
