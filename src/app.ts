@@ -50,6 +50,9 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
         autoHooks: true,
         routeParams: true,
         cascadeHooks: true,
+        indexPattern: /.*index(\.js|\.cjs|\.ts)$/i,
+        ignorePattern: /^((?!index).)*(\.js|\.ts)$/,
+        autoHooksPattern: /.*hooks(\.js|\.cjs|\.ts)$/i,
         options: { ...opts },
     });
 
