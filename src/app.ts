@@ -68,16 +68,22 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
                         params: request.params,
                     },
                 },
-                "Unhandled error occurred",
+                err.message || "Unhandled error occurred",
             );
-            reply.code(err.statusCode ?? 500);
-            let message = "Internal Server Error";
 
-            if (err.statusCode && err.statusCode < 500) {
-                message = err.message;
-            }
+            const statusCode = err.statusCode ?? 500;
+            reply.code(statusCode);
 
-            return { message };
+            return {
+                statusCode,
+                error:
+                    err.name ||
+                    (statusCode >= 500
+                        ? "Internal Server Error"
+                        : "Bad Request"),
+                message:
+                    statusCode >= 500 ? "Internal Server Error" : err.message,
+            };
         },
     );
 
