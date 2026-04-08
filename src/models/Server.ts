@@ -14,5 +14,5 @@ const serverSchema = new Schema(
     { timestamps: true },
 );
 
-export type ServerType = InferSchemaType<typeof serverSchema>;
-export const Server = model("Server", serverSchema);
+export type Server = InferSchemaType<typeof serverSchema>;
+export const ServerModel = model<Server>("Server", serverSchema);

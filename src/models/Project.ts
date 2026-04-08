@@ -22,5 +22,5 @@ const projectSchema = new Schema(
     { timestamps: true },
 );
 
-export type ProjectType = InferSchemaType<typeof projectSchema>;
-export const Project = model("Project", projectSchema);
+export type Project = InferSchemaType<typeof projectSchema>;
+export const ProjectModel = model<Project>("Project", projectSchema);
