@@ -40,7 +40,7 @@ const route: FastifyPluginAsync = async (fastify) => {
         }
 
         // Update / create user in database
-        const dbUser = await UserModel.findOneAndUpdate(
+        const dbUser: User = await UserModel.findOneAndUpdate(
             {
                 githubId: user.id.toString(),
             },
