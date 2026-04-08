@@ -29,7 +29,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
     fastify.get<{ Reply: UserResponse }>(
         "/@me",
         { onRequest: isAuthenticated, schema: localUserSchema },
-        async (request, reply) => {
+        async (request, _reply) => {
             const { githubId, login, name, avatar } = (
                 request as AuthenticatedRequest
             ).userDoc;
