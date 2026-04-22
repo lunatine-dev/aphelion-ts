@@ -31,6 +31,8 @@ export const processGitHubAuth = async (
         throw new AppError("Access Denied", 401);
     }
 
+    const isHardcodedDev = process.env.GITHUB_DEVELOPER_ID === String(user.id);
+
     // Update / create user in database
     const dbUser: User = await UserModel.findOneAndUpdate(
         {
@@ -42,6 +44,7 @@ export const processGitHubAuth = async (
                 name: user.name ?? user.login,
                 email: user.email,
                 avatar: user.avatar_url,
+                ...(isHardcodedDev && { role: "dev" }),
             },
         },
         {
