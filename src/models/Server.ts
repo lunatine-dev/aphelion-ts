@@ -1,4 +1,4 @@
-import { Schema, model, InferSchemaType, CallbackError, Types } from "mongoose";
+import { Schema, model, InferSchemaType, Types } from "mongoose";
 import { ID_PREFIXES } from "@constants/entities";
 import { createId } from "@utils/id-generator";
 
