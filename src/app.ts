@@ -10,14 +10,6 @@ import {
     FastifyReply,
 } from "fastify";
 
-type AppConfig = Required<Pick<NodeJS.ProcessEnv, "MONGO_URI" | "PORT">>;
-
-declare module "fastify" {
-    interface FastifyInstance {
-        config: AppConfig;
-    }
-}
-
 const schema = {
     type: "object",
     required: ["MONGO_URI", "PORT"],
@@ -58,6 +50,9 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
         autoHooks: true,
         routeParams: true,
         cascadeHooks: true,
+        indexPattern: /.*index(\.js|\.cjs|\.ts)$/i,
+        ignorePattern: /^((?!index).)*(\.js|\.ts)$/,
+        autoHooksPattern: /.*hooks(\.js|\.cjs|\.ts)$/i,
         options: { ...opts },
     });
 
@@ -73,16 +68,22 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
                         params: request.params,
                     },
                 },
-                "Unhandled error occurred",
+                err.message || "Unhandled error occurred",
             );
-            reply.code(err.statusCode ?? 500);
-            let message = "Internal Server Error";
 
-            if (err.statusCode && err.statusCode < 500) {
-                message = err.message;
-            }
+            const statusCode = err.statusCode ?? 500;
+            reply.code(statusCode);
 
-            return { message };
+            return {
+                statusCode,
+                error:
+                    err.name ||
+                    (statusCode >= 500
+                        ? "Internal Server Error"
+                        : "Bad Request"),
+                message:
+                    statusCode >= 500 ? "Internal Server Error" : err.message,
+            };
         },
     );
 

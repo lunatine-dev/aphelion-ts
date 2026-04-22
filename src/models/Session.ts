@@ -1,4 +1,5 @@
-import { Schema, model, InferSchemaType } from "mongoose";
+import { Schema, model, InferSchemaType, Types } from "mongoose";
+import { User } from "./User";
 
 const sessionSchema = new Schema(
     {
@@ -21,5 +22,10 @@ const sessionSchema = new Schema(
     { timestamps: true },
 );
 
-export type SessionType = InferSchemaType<typeof sessionSchema>;
-export const Session = model("Session", sessionSchema);
+type InferredSession = InferSchemaType<typeof sessionSchema>;
+
+export interface Session extends Omit<InferredSession, "userId"> {
+    userId: Types.ObjectId | User;
+}
+
+export const SessionModel = model<Session>("Session", sessionSchema);
