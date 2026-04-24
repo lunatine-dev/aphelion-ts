@@ -49,7 +49,7 @@ export const processGitHubAuth = async (
         },
         {
             upsert: true,
-            new: true,
+            returnDocument: "after",
             setDefaultOnInsert: true,
         },
     );
