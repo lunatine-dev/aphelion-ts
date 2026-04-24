@@ -68,4 +68,6 @@ export const handleTicket = async (
             "The ticket is invalid, expired, or has already been used.",
         );
     }
+
+    return payload;
 };
