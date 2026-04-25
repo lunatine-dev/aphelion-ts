@@ -13,7 +13,8 @@
             "@utils/*": ["./utils/*"],
             "@models/*": ["./models/*"],
             "@services/*": ["./services/*"],
-            "@core/*": ["./core/*"]
+            "@core/*": ["./core/*"],
+            "@defs/*": ["./types/*"]
         }
     },
     "include": ["src"]

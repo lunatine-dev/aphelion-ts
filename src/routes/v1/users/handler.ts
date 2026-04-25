@@ -1,23 +1,23 @@
-import { FastifyRequest, FastifyReply } from "fastify";
-import { User } from "@models/User";
-import { Session } from "@models/Session";
+import { FastifyReply, FastifyRequest } from "fastify";
+import { getSessions } from "@services/auth/sessionService";
+import { AuthenticatedRequest } from "@defs/Request";
 
-type AuthenticatedRequest = FastifyRequest & {
-    userDoc: User;
-    sessionDoc: Session;
-};
+export const localUserHandler = {
+    getDevices: async (request: FastifyRequest, reply: FastifyReply) => {
+        const userId = (request as AuthenticatedRequest).userDoc._id;
 
-export const handleLocalUser = async (
-    request: FastifyRequest,
-    reply: FastifyReply,
-) => {
-    const { githubId, login, name, avatar } = (request as AuthenticatedRequest)
-        .userDoc;
+        return await getSessions(userId);
+    },
+    getUser: async (request: FastifyRequest, reply: FastifyReply) => {
+        const { githubId, login, name, avatar } = (
+            request as AuthenticatedRequest
+        ).userDoc;
 
-    return {
-        githubId,
-        login,
-        name,
-        avatar,
-    };
+        return {
+            githubId,
+            login,
+            name,
+            avatar,
+        };
+    },
 };

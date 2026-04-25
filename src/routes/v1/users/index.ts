@@ -1,13 +1,21 @@
 import { FastifyPluginAsync } from "fastify";
-import { localUserSchema } from "./schema";
+import { localUserSchema, getDevicesSchema } from "./schema";
 import { isAuthenticated } from "@core/middleware/auth";
-import { handleLocalUser } from "./handler";
+import { localUserHandler } from "./handler";
 
 const routes: FastifyPluginAsync = async (fastify) => {
     fastify.get(
         "/@me",
         { onRequest: isAuthenticated, schema: localUserSchema },
-        handleLocalUser,
+        localUserHandler.getUser,
+    );
+    fastify.get(
+        "/@me/devices",
+        {
+            onRequest: isAuthenticated,
+            schema: getDevicesSchema,
+        },
+        localUserHandler.getDevices,
     );
 };
 

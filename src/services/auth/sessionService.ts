@@ -62,3 +62,11 @@ export const rotateSession = async (
         sessionId: session._id,
     };
 };
+
+export const getSessions = async (userId: Types.ObjectId) => {
+    return SessionModel.find({
+        isValid: true,
+        userId,
+        expiresAt: { $gt: new Date() },
+    }).select("-refreshToken");
+};
