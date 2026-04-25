@@ -1,5 +1,5 @@
-import { Schema, model, InferSchemaType, Types } from "mongoose";
-import { User } from "./User";
+import { Schema, model, InferSchemaType, Types, Document } from "mongoose";
+import type { User } from "./User";
 
 const sessionSchema = new Schema(
     {
@@ -13,6 +13,7 @@ const sessionSchema = new Schema(
             type: String,
             required: true,
             unique: true,
+            select: false,
         },
         userAgent: { type: String },
         ipAddress: { type: String },
@@ -22,10 +23,15 @@ const sessionSchema = new Schema(
     { timestamps: true },
 );
 
+// Auto-cleanup expired sessions
+sessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
 type InferredSession = InferSchemaType<typeof sessionSchema>;
 
 export interface Session extends Omit<InferredSession, "userId"> {
     userId: Types.ObjectId | User;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export const SessionModel = model<Session>("Session", sessionSchema);
