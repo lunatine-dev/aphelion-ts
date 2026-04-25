@@ -39,6 +39,7 @@ const init = async () => {
     );
 
     await app.ready();
+    app.swagger();
     app.log.info("Plugins loaded");
 
     try {
