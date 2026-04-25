@@ -55,9 +55,7 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
             },
             servers: [
                 {
-                    url:
-                        process.env.PUBLIC_BACKEND_URL ||
-                        "http://localhost:5000",
+                    url: process.env.BACKEND_URL || "http://localhost:5000",
                 },
             ],
             components: {
