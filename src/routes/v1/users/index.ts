@@ -1,36 +1,13 @@
-import { FastifyPluginAsync, FastifyRequest } from "fastify";
-import { isAuthenticated } from "@core/middleware/auth";
-import { User } from "@models/User";
-import { Session } from "@models/Session";
+import { FastifyPluginAsync } from "fastify";
 import { localUserSchema } from "./schema";
-
-interface UserResponse {
-    githubId: string;
-    login: string;
-    name: string | null;
-    avatar: string;
-}
-type AuthenticatedRequest = FastifyRequest & {
-    userDoc: User;
-    sessionDoc: Session;
-};
+import { isAuthenticated } from "@core/middleware/auth";
+import { handleLocalUser } from "./handler";
 
 const routes: FastifyPluginAsync = async (fastify) => {
-    fastify.get<{ Reply: UserResponse }>(
+    fastify.get(
         "/@me",
         { onRequest: isAuthenticated, schema: localUserSchema },
-        async (request, _reply) => {
-            const { githubId, login, name, avatar } = (
-                request as AuthenticatedRequest
-            ).userDoc;
-
-            return {
-                githubId,
-                login,
-                name,
-                avatar,
-            };
-        },
+        handleLocalUser,
     );
 };
 
