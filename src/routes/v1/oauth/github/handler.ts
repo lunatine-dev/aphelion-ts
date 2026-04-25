@@ -1,12 +1,13 @@
 import { FastifyRequest, FastifyReply } from "fastify";
+import { TicketBodyType, CallbackQueryType } from "./schema";
 
 import { AppError } from "@core/errors/errors";
 import { processGitHubAuth } from "@services/auth/github";
 import { issueAccessToken } from "@services/auth/accessTokenService";
-import { saveTicket } from "@services/auth/ticketManager";
+import { consumeTicket, saveTicket } from "@services/auth/ticketManager";
 
 export const handleCallback = async (
-    request: FastifyRequest,
+    request: FastifyRequest<{ Querystring: CallbackQueryType }>,
     reply: FastifyReply,
 ) => {
     // Grab accessToken from auth flow
@@ -52,4 +53,21 @@ export const handleCallback = async (
         request.log.error(err);
         return reply.internalServerError("Something went wrong");
     }
+};
+
+export const handleTicket = async (
+    request: FastifyRequest<{ Body: TicketBodyType }>,
+    reply: FastifyReply,
+) => {
+    const { ticket } = request.body;
+
+    const payload = consumeTicket(ticket);
+
+    if (!payload) {
+        return reply.unauthorized(
+            "The ticket is invalid, expired, or has already been used.",
+        );
+    }
+
+    return payload;
 };

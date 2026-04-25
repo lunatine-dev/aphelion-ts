@@ -22,7 +22,7 @@ const userSchema = new Schema(
         avatar: { type: String, required: true },
         role: {
             type: String,
-            enum: ["admin", "user"],
+            enum: ["user", "admin", "dev"],
             default: "user",
         },
         installations: [installationSchema],

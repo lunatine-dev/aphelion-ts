@@ -1,6 +1,8 @@
 import fastifyAutoload from "@fastify/autoload";
 import env from "@fastify/env";
 import { isDirectory } from "@utils/filesystem";
+import swagger from "@fastify/swagger";
+import swaggerUi from "@fastify/swagger-ui";
 
 import path from "path";
 import {
@@ -43,6 +45,36 @@ const serviceApp: FastifyPluginAsync = async (fastify, opts) => {
             });
         }
     }
+
+    // Load swagger
+    await fastify.register(swagger, {
+        openapi: {
+            info: {
+                title: "Aphelion API",
+                version: "1.0.0",
+            },
+            servers: [
+                {
+                    url:
+                        process.env.PUBLIC_BACKEND_URL ||
+                        "http://localhost:5000",
+                },
+            ],
+            components: {
+                securitySchemes: {
+                    bearerAuth: {
+                        type: "http",
+                        scheme: "bearer",
+                        bearerFormat: "JWT",
+                    },
+                },
+            },
+        },
+    });
+
+    await fastify.register(swaggerUi, {
+        routePrefix: "/docs",
+    });
 
     // Load routes
     fastify.register(fastifyAutoload, {

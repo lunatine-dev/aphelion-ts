@@ -52,7 +52,7 @@ export const rotateSession = async (
             ipAddress: ip,
             userAgent,
         },
-        { new: true }, // Returns the updated document
+        { returnDocument: "after" }, // Returns the updated document
     );
 
     if (!session) return { error: "Invalid or expired session" };
@@ -61,4 +61,12 @@ export const rotateSession = async (
         newRefreshToken: newRaw,
         sessionId: session._id,
     };
+};
+
+export const getSessions = async (userId: Types.ObjectId) => {
+    return SessionModel.find({
+        isValid: true,
+        userId,
+        expiresAt: { $gt: new Date() },
+    }).select("-refreshToken");
 };
