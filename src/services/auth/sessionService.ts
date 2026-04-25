@@ -52,7 +52,7 @@ export const rotateSession = async (
             ipAddress: ip,
             userAgent,
         },
-        { new: true }, // Returns the updated document
+        { returnDocument: "after" }, // Returns the updated document
     );
 
     if (!session) return { error: "Invalid or expired session" };
